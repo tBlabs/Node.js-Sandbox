@@ -13,8 +13,7 @@
                 "."
             ],
             "showOutput": "silent",
-            "problemMatcher": "$tsc"
-            
+            "problemMatcher": "$tsc"           
         }
     ]
 }
