@@ -1,12 +1,8 @@
-# Node.js-Sandbox
-Typescript + VS Code + Debugger
-
-
-Build
+#Build
 
 Ctrl+Shift+B
 
-Debug
+#Debug
 
 F5
 
