@@ -7,6 +7,6 @@ export class A
 {
     constructor(b: B)
     {
-        console.log("A constructed");     
+        console.log("A constructed (with B)");     
     }
 }

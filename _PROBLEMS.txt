@@ -1,0 +1,17 @@
+
+
+How to import os.EOL?
+
+    import { EOL } from 'os'
+    is not working.
+    
+    import os = require('os')
+    os.EOL
+    is also not working..
+
+
+
+
+How to remove index.ts in /handlers?
+
+    This file is required because of exports which probably calls AssignMessage decorator

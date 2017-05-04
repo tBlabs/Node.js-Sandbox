@@ -10,3 +10,23 @@ export class B
         console.log("B constructed");     
     }
 }
+
+
+class CqrsBus
+{
+    Execute(message)
+    {
+        message.validate
+
+        return {}
+    }
+}
+
+
+class XHandler
+{
+    Handle(query)
+    {
+        query.validate
+    }
+}
