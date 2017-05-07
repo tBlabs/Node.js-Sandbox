@@ -1,4 +1,6 @@
+import { Context } from "../framework/Context";
+
 export interface IMessageHandler
 {
-    Handle(query: any): any;
+    Handle(query: any, context: Context): Promise<any>;
 }

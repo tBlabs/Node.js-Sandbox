@@ -1,5 +1,6 @@
 import { IMessageHandler } from './IQuery.interface';
 import { container } from "../inversify.config";
+import { Context } from "../framework/Context";
 
 /*
     This decorator need to be added to every handler class
@@ -23,32 +24,30 @@ export class CqrsBus
         this.dict[name] = klass;
         container.bind(klass).toSelf();
     }
-    
+
     private static ResolveMessageHandler(name): IMessageHandler
     {
-        let n = Object.keys(this.dict).find(i => i === name); 
+        let n = Object.keys(this.dict).find(i => i === name);
 
         if (n === undefined) throw `Could not find handler for message "${ name }".`;
-        
+
         return container.get(this.dict[n]) as IMessageHandler;
     }
 
-
-    public static Execute(messageAsText: string)
+    public static Execute(messageAsText: string, context: Context): Promise<any>
     {
-       let messagePackage = JSON.parse(messageAsText);
+        let messagePackage = JSON.parse(messageAsText);
 
         let messageName = Object.keys(messagePackage)[0]; // First key is a message class name
         let messageBody = messagePackage[messageName]; // Value of first key is message class body/properties
-   
+
         console.log("Handling", messageName, "...");
         console.log('Message =', messageBody);
 
         let messageHandler = this.ResolveMessageHandler(messageName);
-       
-        let result = messageHandler.Handle(messageBody);
 
-        return result;
+        return messageHandler.Handle(messageBody, context);//.then((result) => console.log("Handle result:", result))
+          //  .catch((err) => console.log("Handle error:", err));
     }
 }
 

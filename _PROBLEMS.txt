@@ -1,5 +1,13 @@
 
 
+Why typescrpt need to be installed globally to make mongo import work?
+
+    Without global TS instalation compiler complains about 
+    some types.....
+
+
+    
+
 How to import os.EOL?
 
     import { EOL } from 'os'
