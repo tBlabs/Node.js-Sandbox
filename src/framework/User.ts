@@ -2,10 +2,10 @@ import { guid } from "../types";
 
 export class Claims
 {
-    canAddNote: boolean;
-    canReadNote: boolean;
-    canDeleteNotes: boolean;
-    canChangeNote: boolean;
+    canAddNote: boolean = false;
+    canReadNote: boolean = false;
+    canDeleteNotes: boolean = false;
+    canChangeNote: boolean = false;
 }
 
 export class User

@@ -32,7 +32,5 @@ export class Database
     public Close()
     {
         this._db.close();
-        console.log("db close");
-        
     }
 }

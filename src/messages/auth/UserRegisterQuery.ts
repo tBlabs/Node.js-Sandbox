@@ -1,4 +1,4 @@
-export class LoginQuery
+export class UserRegisterQuery
 {
     email: string;
     password: string;

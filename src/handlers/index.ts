@@ -1,6 +1,7 @@
-import { LoginQueryHandler } from './LoginQueryHandler';
-import { AddNoteCommandHandler } from './AddNoteCommandHandler';
-import { GetNotesQueryHandler } from './GetNotesQueryHandler';
+import { LoginQueryHandler } from './auth/LoginQueryHandler';
+import { AddNoteCommandHandler } from './notes/AddNoteCommandHandler';
+import { GetNotesQueryHandler } from './notes/GetNotesQueryHandler';
+import { UserRegisterQueryHandler } from './auth/UserRegisterQueryHandler';
 
 
-export { LoginQueryHandler, AddNoteCommandHandler, GetNotesQueryHandler }
+export { LoginQueryHandler, AddNoteCommandHandler, GetNotesQueryHandler, UserRegisterQueryHandler }

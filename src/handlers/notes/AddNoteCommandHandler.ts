@@ -1,13 +1,12 @@
 import { injectable, Container } from 'inversify';
 import 'reflect-metadata';
-import { IMessageHandler } from "../cqrs/IQuery.interface";
-import { AssignMessage } from "../cqrs/cqrs";
-import { AddNoteCommand } from "../messages/AddNoteCommand";
+import { AssignMessage } from "../../cqrs/cqrs";
+import { AddNoteCommand } from "../../messages/AddNoteCommand";
+import { IMessageHandler } from "../../cqrs/IQuery.interface";
+import { NotesRepo } from "../../repositories/notes.repo";
+import { Context } from "../../framework/Context";
+import { NoteEntity } from "../../entities/NoteEntity";
 
-import { guid } from "../types";
-import { NoteEntity } from "../entities/NoteEntity";
-import { NotesRepo } from "../repositories/notes.repo";
-import { Context } from "../framework/Context";
 
 @AssignMessage(AddNoteCommand)
 @injectable()

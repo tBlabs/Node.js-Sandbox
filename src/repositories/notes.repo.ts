@@ -20,11 +20,9 @@ export class NotesRepo
             {
                 collection.insertOne(note).then(() =>
                 {
-                    console.log("inserted");
-                
                     this._db.Close();
 
-                    resolve();
+                    return resolve();
                 })          
             });
         });
@@ -36,9 +34,9 @@ export class NotesRepo
         {
             this._db.Open(this.collectionName).then((collection) =>
             {
-                let c = collection.find({ parentId: null });
-             //   c.forEach(i=>console.log(i));
-             resolve(c.toArray());
+                let c = collection.find({ parentId: parentId }, { _id: 0, id: 1, title: 1, content: 1 });
+          
+                return resolve(c.toArray());
             })
         });
     }
