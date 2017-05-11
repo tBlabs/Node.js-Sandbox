@@ -1,4 +1,4 @@
-import { guid } from "../types";
+import { guid } from "../../types";
 
 export class GetNotesQuery
 {

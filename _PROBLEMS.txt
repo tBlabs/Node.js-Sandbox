@@ -1,21 +1,15 @@
 
+Debug not working in promise?
+
+    Works in normal sync code but have a problem with async?
+
+
+
 
 Why typescrpt need to be installed globally to make mongo import work?
 
     Without global TS instalation compiler complains about 
     some types.....
-
-
-    
-
-How to import os.EOL?
-
-    import { EOL } from 'os'
-    is not working.
-    
-    import os = require('os')
-    os.EOL
-    is also not working..
 
 
 

@@ -5,7 +5,7 @@ export class UserEntity
 {
     id: guid;
     email: string;
-    pass: string;
+    password: string;
     claims: Claims;
     insertTime: Date;
     lastLoginTime: Date;

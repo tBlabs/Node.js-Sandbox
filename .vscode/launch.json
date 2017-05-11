@@ -14,7 +14,7 @@
           
             "name": "DEBUG",
             "outFiles": ["${workspaceRoot}/bin/*.js"],
-            "program": "${workspaceRoot}/src/main.ts",
+            "program": "${workspaceRoot}/src/startup.ts",
             "request": "launch",
             "runtimeArgs": [
                 "--nolazy"

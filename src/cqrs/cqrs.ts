@@ -2,36 +2,23 @@ import { IMessageHandler } from './IQuery.interface';
 import { container } from "../inversify.config";
 import { Context } from "../framework/Context";
 
-/*
-    This decorator need to be added to every handler class
-    with appriopriate message (command or query) class.
-*/
-export function AssignMessage(messageClass: any)
+export class Cqrs
 {
-    return function (target)
-    {
-        CqrsBus.RegisterMessageHandler(messageClass.name, target);
-    }
-}
-
-
-export class CqrsBus
-{
-    private static dict = [];
+    private static messageHandlerCollection = [];
 
     public static RegisterMessageHandler(name: string, klass: any)
     {
-        this.dict[name] = klass;
+        this.messageHandlerCollection[name] = klass; // collection['messageName'] = messageClass
         container.bind(klass).toSelf();
     }
 
     private static ResolveMessageHandler(name): IMessageHandler
     {
-        let n = Object.keys(this.dict).find(i => i === name);
+        let n = Object.keys(this.messageHandlerCollection).find(i => i === name);
 
         if (n === undefined) throw `Could not find handler for message "${ name }".`;
 
-        return container.get(this.dict[n]) as IMessageHandler;
+        return container.get(this.messageHandlerCollection[n]) as IMessageHandler;
     }
 
     public static Execute(messageAsText: string, context: Context): Promise<any>
@@ -46,8 +33,7 @@ export class CqrsBus
 
         let messageHandler = this.ResolveMessageHandler(messageName);
 
-        return messageHandler.Handle(messageBody, context);//.then((result) => console.log("Handle result:", result))
-          //  .catch((err) => console.log("Handle error:", err));
+        return messageHandler.Handle(messageBody, context);
     }
 }
 

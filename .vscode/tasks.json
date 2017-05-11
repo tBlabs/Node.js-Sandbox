@@ -4,10 +4,22 @@
     "version": "0.1.0",
     "tasks": [
         {
+            "taskName": "clean",
+            "isBuildCommand": false,
+            "isShellCommand": true,
+            "command": "rmdir",
+            "args": [
+                "bin",
+                "/s"
+            ],
+            "showOutput": "always",
+            "echoCommand": true
+        },
+        {
             "taskName": "build",
             "isBuildCommand": true,
             "isShellCommand": true,
-            "command": "tsc",          
+            "command": "tsc",
             "args": [
                 "-p",
                 "."
@@ -15,7 +27,6 @@
             "showOutput": "always",
             "problemMatcher": "$tsc",
             "echoCommand": true
-                       
         },
         {
             "taskName": "test_task",
@@ -25,7 +36,6 @@
                 "hi there!"
             ],
             "showOutput": "always"
-            
         }
     ]
 }

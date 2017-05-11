@@ -1,11 +1,11 @@
 import { injectable, Container } from 'inversify';
 import 'reflect-metadata';
-import { AssignMessage } from "../../cqrs/cqrs";
-import { AddNoteCommand } from "../../messages/AddNoteCommand";
 import { IMessageHandler } from "../../cqrs/IQuery.interface";
 import { NotesRepo } from "../../repositories/notes.repo";
 import { Context } from "../../framework/Context";
 import { NoteEntity } from "../../entities/NoteEntity";
+import { AddNoteCommand } from "../../messages/notes/AddNoteCommand";
+import { AssignMessage } from "../../decorators/AssignMessage";
 
 
 @AssignMessage(AddNoteCommand)

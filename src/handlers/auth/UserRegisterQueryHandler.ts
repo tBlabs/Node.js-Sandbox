@@ -2,7 +2,6 @@ import { injectable, Container } from 'inversify';
 import 'reflect-metadata';
 import { Context } from "../../framework/Context";
 import { Database } from "../../database/Database";
-import { AssignMessage } from "../../cqrs/cqrs";
 import { IMessageHandler } from "../../cqrs/IQuery.interface";
 import { UserRegisterQuery } from "../../messages/auth/UserRegisterQuery";
 import { UserEntity } from "../../entities/UserEntity";
@@ -10,6 +9,7 @@ import { v4 as RandomGuid } from 'uuid';
 import { Auth } from "../../services/auth";
 import { Claims, User } from "../../framework/User";
 import { UserAlreadyExistsException } from "../exceptions/UserAlreadyExistsException";
+import { AssignMessage } from "../../decorators/AssignMessage";
 
 
 
@@ -38,7 +38,7 @@ export class UserRegisterQueryHandler implements IMessageHandler
 
                         let userEntity: UserEntity = new UserEntity();
                         userEntity.email = query.email;
-                        userEntity.pass = query.password;
+                        userEntity.password = query.password;
                         userEntity.id = RandomGuid();
                         userEntity.insertTime = new Date();
                         userEntity.lastLoginTime = new Date(0);
