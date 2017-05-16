@@ -33,7 +33,17 @@ export class Cqrs
 
         let messageHandler = this.ResolveMessageHandler(messageName);
 
-        return messageHandler.Handle(messageBody, context);
+        return messageHandler.Handle(messageBody, context)
+        // .then((result) =>
+        // {
+        //     console.log("[cqrs.execute.handle] " + JSON.stringify(result));
+
+         
+        // }).catch((error) =>
+        // {
+        // console.log("[cqrs.execute.handle] "+JSON.stringify(error));
+        
+        // });
     }
 }
 

@@ -7,9 +7,10 @@ import { UserRegisterQuery } from "../../messages/auth/UserRegisterQuery";
 import { UserEntity } from "../../entities/UserEntity";
 import { v4 as RandomGuid } from 'uuid';
 import { Auth } from "../../services/auth";
-import { Claims, User } from "../../framework/User";
+import { User } from "../../framework/User";
 import { UserAlreadyExistsException } from "../exceptions/UserAlreadyExistsException";
 import { AssignMessage } from "../../decorators/AssignMessage";
+import { Claims } from "../../framework/Claims";
 
 
 

@@ -13,7 +13,7 @@
             },
           
             "name": "DEBUG",
-            "outFiles": ["${workspaceRoot}/bin/*.js"],
+            "outFiles": ["${workspaceRoot}/bin/**/*.js"],
             "program": "${workspaceRoot}/src/startup.ts",
             "request": "launch",
             "runtimeArgs": [

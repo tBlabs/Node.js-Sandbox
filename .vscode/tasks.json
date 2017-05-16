@@ -4,13 +4,21 @@
     "version": "0.1.0",
     "tasks": [
         {
+            "taskName": "test",
+            "isBuildCommand": false,
+            "isShellCommand": true,
+            "command": "jasmine",
+            "showOutput": "always"
+        },
+        {
             "taskName": "clean",
             "isBuildCommand": false,
             "isShellCommand": true,
             "command": "rmdir",
             "args": [
-                "bin",
-                "/s"
+                "${workspaceRoot}\\bin",
+                "/s",
+                "/q"
             ],
             "showOutput": "always",
             "echoCommand": true

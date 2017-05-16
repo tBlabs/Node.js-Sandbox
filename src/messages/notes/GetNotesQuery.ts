@@ -2,5 +2,5 @@ import { guid } from "../../types";
 
 export class GetNotesQuery
 {
-    parentId: guid;
+    public parentId: guid;
 }

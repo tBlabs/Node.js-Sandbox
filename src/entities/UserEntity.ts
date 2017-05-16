@@ -1,5 +1,5 @@
 import { guid } from "../types";
-import { Claims } from "../framework/User";
+import { Claims } from "../framework/Claims";
 
 export class UserEntity
 {

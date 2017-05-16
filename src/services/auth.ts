@@ -3,8 +3,8 @@ import 'reflect-metadata'
 import { User } from './../framework/User';
 import { v4 } from 'uuid';
 import { decode, encode } from 'jwt-simple';
-import { Claims } from "../framework/User";
 import { guid } from "../types";
+import { Claims } from "../framework/Claims";
 
 export class Payload
 {

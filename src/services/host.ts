@@ -1,79 +1,71 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+// import * as express from 'express';
+// import * as bodyParser from 'body-parser';
 
-enum HttpMethod {
-    Get,
-    Post
-}
-class Route
-{
-    method: HttpMethod;
-    url: string;
-    handler: Route;
-}
+// export enum RequestMethod
+// {
+//     Get,
+//     Post
+// }
 
-class Request
-{
-    public body: string;
-    public auth: string;
-}
-
-export class RouteHandler
-{
-    public request: Request;
-   // public Respond(statusCode, body): void;
+// export class Route
+// {
+//     method: RequestMethod;
+//     url: string;
+//     handler: Route;
+// }
 
 
-}
+// export class Host
+// {
+//     private server: express.Express = null;
+//     private routes: Route[] = null;
 
-export class Host
-{
-    private server: express.Express = null;
-    private routes: Route[] = null;
+//     constructor() 
+//     {     
+//         this.server = express();
 
-    constructor() 
-    { 
-    
-        this.server = express();
+//         this.Config();
 
-        this.Config();
+//         this.server.all('/:url', (req, res) => 
+//         {
+//             console.log(req.params.url);
+//             console.log(req.method);
 
-        this.Routes();
-     }
+//             // re.met
+//             // postRoutesCollection[req.params.] 
 
-    private  Config()
-    {
-        this.server.use(bodyParser.text());
-    }
-    
+//             // // console.log(JSON.stringify(req.headers['authorization']));
+//             // console.log(JSON.stringify(req.headers['authorization']));
+//             // // console.log(req.body);
+//             // res.send("hi! " + req.body);
 
-    private  Routes()
-    {
-        console.log("asdf");
-        
-        this.server.post('/:url', (req, res) => 
-        {
-            console.log(req.params.url);
-            
-            // re.met
-            // postRoutesCollection[req.params.] 
+//             // let authToken = req.headers['authorization'];
+//             // let body = req.body;
 
-            // // console.log(JSON.stringify(req.headers['authorization']));
-            // console.log(JSON.stringify(req.headers['authorization']));
-            // // console.log(req.body);
-            // res.send("hi! " + req.body);
+//             // Cqrs.Handle(auth, body)
+//             //     .then((handlerResult) => { })
+//             //     .catch((hadnlerException) => { })
+//         });
+//      }
 
-            // let authToken = req.headers['authorization'];
-            // let body = req.body;
+//     private  Config()
+//     {
+//         this.server.use(bodyParser.text());
+//     }
 
-            // Cqrs.Handle(auth, body)
-            //     .then((handlerResult) => { })
-            //     .catch((hadnlerException) => { })
-        });
-    }
+//     public Register(requestType: RequestMethod, url: string, handler: any)
+//     {
+//         let route = new Route();
+//         route.method = requestType;
+//         route.url = url;
+//         route.handler = handler;
 
-    public  Serve()
-    {
-        this.server.listen(3000, () => console.log('* SERVER START *'));
-    }
-}
+//         this.routes.push(route);
+//     }
+ 
+//     public  Serve()
+//     {
+
+//         this.server.listen(3000, () => console.log('* SERVER START *'));
+//     }
+// }
