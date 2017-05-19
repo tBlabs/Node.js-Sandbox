@@ -19,34 +19,34 @@ export class LoginQueryHandler implements IMessageHandler
 {
     constructor(private _db: Database, private _auth: Auth) { }
 
-    Handle(query: LoginQuery, context: Context): Promise<any>
+    public async Handle(query: LoginQuery, context: Context): Promise<string>
     {
-        return new Promise((resolve, reject) =>
-        {      
-            this._db.Open('users').then((usersCollection) =>
-            {
-                usersCollection.findOneAndUpdate({ email: query.email }, 
-                    { $set: { lastLoginTime: new Date() } })
-                    .then((entry: FindAndModifyWriteOpResultObject) =>
-                {
-                  //  if ((entry.ok != 1) || (entry.value == null)) return reject(new UserNotFoundException());
-                    if ((entry.ok != 1) || (entry.value == null)) throw new UserNotFoundException();
+        let usersCollection = await this._db.Open('users');
 
-                    let userEntity: UserEntity = entry.value;
+        let entry: FindAndModifyWriteOpResultObject = await usersCollection.findOneAndUpdate(
+            { email: query.email },
+            { $set: { lastLoginTime: new Date() } }
+        );
 
-                //    if (userEntity.password != query.password) return reject(new WrongPasswordException());
-                    if (userEntity.password != query.password) throw new WrongPasswordException();
-                                   
-                    let user = new User();
-                    user.id = userEntity.id;
-                    user.claims = userEntity.claims;
+        if ((entry.ok != 1) || (entry.value == null))
+        {
+            throw new UserNotFoundException();
+        }
 
-                    let token = this._auth.GenerateTokenForUser(userEntity);
+        let userEntity: UserEntity = entry.value;
 
-                    return resolve(token);
-                });
-            });
-        });
+        if (userEntity.password != query.password)
+        {
+            throw new WrongPasswordException();
+        }
+
+        let user = new User();
+        user.id = userEntity.id;
+        user.claims = userEntity.claims;
+
+        let token: string = this._auth.GenerateTokenForUser(userEntity);
+
+        return token;
     }
 }
 

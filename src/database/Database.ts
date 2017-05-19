@@ -14,23 +14,33 @@ export class Database
         this._mongo = new MongoClient();
     }
 
-    public Open(collection): Promise<Collection>
+    public async Clean(collection: string): Promise<void>
     {
-        return new Promise((resolve, reject) =>
-        {
-            this._mongo.connect(this.connectionString, (e: MongoError, db: Db) =>
-            {
-                if (e) reject(e);
+        let db = await this._mongo.connect(this.connectionString);
 
-                this._db = db;
-
-                resolve(db.collection(collection));
-            });
-        });
+        return await db.collection(collection).drop();
     }
 
-    public Close()
+    public async Open(collection: string): Promise<Collection>
     {
-        this._db.close();
+        try
+        {
+            let db = await this._mongo.connect(this.connectionString);
+            return await db.collection(collection);
+        }
+        catch (error)
+        {
+            console.log("Collection open exception: ", error);
+
+            throw error;
+        }
+    }
+
+    public async Close(): Promise<void>
+    {
+        if (this._db !== null)
+        {
+            return await this._db.close();
+        }    
     }
 }

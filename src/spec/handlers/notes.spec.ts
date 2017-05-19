@@ -11,25 +11,14 @@ class NotesRepoMock implements INotesRepo
 {
     private notes: NoteEntity[] = [];
 
-    public Add(note: NoteEntity): Promise<any>
+    public async Add(note: NoteEntity): Promise<any>
     {
-        return new Promise((resolve, reject) => 
-        {
-            this.notes.push(note);
-
-            return resolve();
-        });
+        await this.notes.push(note);
     }
 
-    public GetChildren(parentId: guid, userId: guid): Promise<any>
+    public async GetChildren(parentId: guid, userId: guid): Promise<any>
     {
-        return new Promise((resolve, reject) => 
-        {
-            this.notes.find(n => n.parentId === parentId && n.userId === userId);
-
-
-            return resolve();
-        });
+        await this.notes.find(n => n.parentId === parentId && n.userId === userId);
     }
 }
 
@@ -51,26 +40,38 @@ describe("Notes handlers", () =>
         context = new Context();
     });
 
-    it("should add note", () =>
+    it("should add note", async (done) =>
     {
         context.user.claims.canAddNote = true;
 
-        addNoteCommandHandler.Handle(addNoteCommand, context).then((result) =>
+        try
         {
-            expect(result).toBeNull();
-        })
-        .catch((e) => console.log("CATCHED EXCEPTION: " + e));
+            let result = await addNoteCommandHandler.Handle(addNoteCommand, context);
+          
+            expect(result).toBe(void 0);
+        }
+        catch (e)
+        {
+            expect(true).toBeFalsy("Should never get here!!!");
+        }
+       
+        done();
     });
 
-    it("shouldn't add note (unathorized exception)", () =>
+    it("should throw unathorized exception", async (done) =>
     {
-        addNoteCommandHandler.Handle(addNoteCommand, context).then((result) =>
+        context.user.claims.canAddNote = false;
+
+        try
         {
-            expect(true).toBeFalsy();
-        })
-        .catch((e: HandlerException) =>
+            let result = await addNoteCommandHandler.Handle(addNoteCommand, context);
+            expect(true).toBeFalsy('Should never get here!!!');
+        }
+        catch (e)
         {
             expect(e.message).toBe(new UnathorizedException().message);
-        });
+        }
+
+        done();
     });
 });

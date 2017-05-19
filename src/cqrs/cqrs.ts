@@ -21,7 +21,7 @@ export class Cqrs
         return container.get(this.messageHandlerCollection[n]) as IMessageHandler;
     }
 
-    public static Execute(messageAsText: string, context: Context): Promise<any>
+    public static async Execute(messageAsText: string, context: Context): Promise<any>
     {
         let messagePackage = JSON.parse(messageAsText);
 
@@ -33,7 +33,7 @@ export class Cqrs
 
         let messageHandler = this.ResolveMessageHandler(messageName);
 
-        return messageHandler.Handle(messageBody, context)
+        return  messageHandler.Handle(messageBody, context);
         // .then((result) =>
         // {
         //     console.log("[cqrs.execute.handle] " + JSON.stringify(result));

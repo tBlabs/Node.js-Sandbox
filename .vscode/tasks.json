@@ -4,21 +4,13 @@
     "version": "0.1.0",
     "tasks": [
         {
-            "taskName": "test",
-            "isBuildCommand": false,
-            "isShellCommand": true,
-            "command": "jasmine",
-            "showOutput": "always"
-        },
-        {
             "taskName": "clean",
-            "isBuildCommand": false,
             "isShellCommand": true,
-            "command": "rmdir",
+            "command": "rm",
             "args": [
-                "${workspaceRoot}\\bin",
-                "/s",
-                "/q"
+                "${workspaceRoot}/bin",
+                "-rf",
+                ""
             ],
             "showOutput": "always",
             "echoCommand": true
@@ -37,13 +29,23 @@
             "echoCommand": true
         },
         {
-            "taskName": "test_task",
+            "taskName": "test",
+            "isTestCommand": true,
+            "isShellCommand": true,
+            "command": "jasmine",
+            "args": [
+                "--config=src/spec/support/jasmine.json"
+            ],
+            "showOutput": "always"
+        },
+        {
+            "taskName": "sayhi",
             "isShellCommand": true,
             "command": "echo",
             "args": [
                 "hi there!"
             ],
             "showOutput": "always"
-        }
+        }     
     ]
 }

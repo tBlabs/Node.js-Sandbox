@@ -12,53 +12,46 @@ import { UserAlreadyExistsException } from "../exceptions/UserAlreadyExistsExcep
 import { AssignMessage } from "../../decorators/AssignMessage";
 import { Claims } from "../../framework/Claims";
 
-
-
 @AssignMessage(UserRegisterQuery)
 @injectable()
 export class UserRegisterQueryHandler implements IMessageHandler
 {
     constructor(private _db: Database, private _auth: Auth) { }
 
-    Handle(query: UserRegisterQuery, context: Context): Promise<any>
+    public async Handle(query: UserRegisterQuery, context: Context): Promise<any>
     {
-        return new Promise((resolve, reject) =>
+        let collection = await this._db.Open('users');
+
+        let item = await collection.findOne({ email: query.email });
+
+        if (item)
         {
-            this._db.Open('users').then((collection) =>
-            {
-                collection.findOne({ email: query.email }).then((item) =>
-                {
-                    if (item) return reject(new UserAlreadyExistsException());
-                    else
-                    {
-                        let newUserClaims = new Claims();
-                        newUserClaims.canAddNote = true;
-                        newUserClaims.canChangeNote = true;
-                        newUserClaims.canDeleteNotes = true;
-                        newUserClaims.canReadNote = true;
+            throw new UserAlreadyExistsException();
+        }
 
-                        let userEntity: UserEntity = new UserEntity();
-                        userEntity.email = query.email;
-                        userEntity.password = query.password;
-                        userEntity.id = RandomGuid();
-                        userEntity.insertTime = new Date();
-                        userEntity.lastLoginTime = new Date(0);
-                        userEntity.claims = newUserClaims;
+        let newUserClaims = new Claims();
+        newUserClaims.canAddNote = true;
+        newUserClaims.canChangeNote = true;
+        newUserClaims.canDeleteNotes = true;
+        newUserClaims.canReadNote = true;
 
-                        collection.insertOne(userEntity).then(() => 
-                        {
-                            let user = new User();
-                            user.id = userEntity.id;
-                            user.claims = userEntity.claims;
+        let userEntity: UserEntity = new UserEntity();
+        userEntity.email = query.email;
+        userEntity.password = query.password;
+        userEntity.id = RandomGuid();
+        userEntity.insertTime = new Date();
+        userEntity.lastLoginTime = new Date(0);
+        userEntity.claims = newUserClaims;
 
-                            let token = this._auth.GenerateTokenForUser(userEntity);
+        await collection.insertOne(userEntity);
 
-                            return resolve(token);
-                        });
-                    }
-                });
-            });
-        });
+        let user = new User();
+        user.id = userEntity.id;
+        user.claims = userEntity.claims;
+
+        let token = this._auth.GenerateTokenForUser(userEntity);
+
+        return token;
     }
 }
 

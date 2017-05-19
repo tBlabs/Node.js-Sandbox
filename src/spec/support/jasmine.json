@@ -1,5 +1,5 @@
 {
-  "spec_dir": "%cd%\\..\\bin\\spec",
+  "spec_dir": "/bin/spec",
   "spec_files": [
     "**/*.spec.js"
   ],
