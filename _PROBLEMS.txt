@@ -1,7 +1,15 @@
 
-Debug not working in promise?
 
-    Works in normal sync code but have a problem with async?
+Chain tasks in VS Code
+
+    Is it possible?
+
+
+
+
+Shortcut to specified task?
+
+    Is it possible?
 
 
 

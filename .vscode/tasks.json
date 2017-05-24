@@ -43,9 +43,22 @@
             "isShellCommand": true,
             "command": "echo",
             "args": [
-                "hi there!"
+                "hi",
+                "there!"
             ],
             "showOutput": "always"
-        }     
+        },
+        {
+            "taskName": "curl LoginQuery",
+            "isShellCommand": true,
+            "command": "curl",
+            "args": [
+                "-X", "POST",
+                "--header", "'Content-Type:application/json'",
+                "--data-raw", "\"{'LoginQuery': {'email':'tB', 'password':'pass'}}\"",
+                "--url", "localhost:3000/api/cqrsbus"
+            ],
+            "showOutput": "never"
+        }
     ]
 }

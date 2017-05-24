@@ -1,6 +1,7 @@
 import { Cursor } from '@types/mongodb';
 import { Collection } from '@types/mongodb';
 import { Database } from "../database/Database";
+import { container } from "../inversify.config";
 
 describe("mongodb connection", () =>
 {
@@ -8,7 +9,7 @@ describe("mongodb connection", () =>
 
     beforeEach(async () =>
     {
-        db = new Database();
+        db = container.resolve(Database);
         await db.Clean('test');
     });
 

@@ -6,21 +6,8 @@ import { NoteEntity } from "../../entities/NoteEntity";
 import { guid } from "../../types";
 import { INotesRepo } from "../../repositories/INotesRepo";
 import { HandlerException } from "../../framework/HandlerException";
+import { NotesRepoMock } from "./NotesRepo.mock";
 
-class NotesRepoMock implements INotesRepo
-{
-    private notes: NoteEntity[] = [];
-
-    public async Add(note: NoteEntity): Promise<any>
-    {
-        await this.notes.push(note);
-    }
-
-    public async GetChildren(parentId: guid, userId: guid): Promise<any>
-    {
-        await this.notes.find(n => n.parentId === parentId && n.userId === userId);
-    }
-}
 
 describe("Notes handlers", () =>
 {

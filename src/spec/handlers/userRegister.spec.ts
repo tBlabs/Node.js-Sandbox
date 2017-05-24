@@ -5,6 +5,7 @@ import { UserRegisterQueryHandler } from './../../handlers/auth/UserRegisterQuer
 import { UserRegisterQuery } from "../../messages/auth/UserRegisterQuery";
 import { Database } from "../../database/Database";
 import { HandlerException } from "../../framework/HandlerException";
+import { container } from "../../inversify.config";
 
 
 describe('User Register Query Handler', () =>
@@ -17,7 +18,7 @@ describe('User Register Query Handler', () =>
 
     beforeEach(() =>
     {
-        database = new Database();
+        database = container.resolve(Database);
         auth = new Auth();
         userRegisterQuery = new UserRegisterQuery();
         userRegisterQueryHandler = new UserRegisterQueryHandler(database, auth);

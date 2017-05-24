@@ -1,49 +1,59 @@
 import { IMessageHandler } from './IQuery.interface';
 import { container } from "../inversify.config";
 import { Context } from "../framework/Context";
+import { HandlerException } from "../framework/HandlerException";
 
 export class Cqrs
 {
-    private static messageHandlerCollection = [];
+    private static messageHandlers = {};
+
+    public static PrintMessagesHandlers()
+    {
+        console.log("Handlers: ", this.messageHandlers);
+    }
 
     public static RegisterMessageHandler(name: string, klass: any)
     {
-        this.messageHandlerCollection[name] = klass; // collection['messageName'] = messageClass
+        this.messageHandlers[name] = klass; // collection['messageName'] = messageClass
         container.bind(klass).toSelf();
     }
 
     private static ResolveMessageHandler(name): IMessageHandler
     {
-        let n = Object.keys(this.messageHandlerCollection).find(i => i === name);
+        let n = Object.keys(this.messageHandlers).find(i => i === name);
 
         if (n === undefined) throw `Could not find handler for message "${ name }".`;
 
-        return container.get(this.messageHandlerCollection[n]) as IMessageHandler;
+        return container.get(this.messageHandlers[n]) as IMessageHandler;
     }
 
-    public static async Execute(messageAsText: string, context: Context): Promise<any>
+    public static async Execute(messagePackage: any, context: Context): Promise<any>
     {
-        let messagePackage = JSON.parse(messageAsText);
+        try
+        {
+            //  console.log("messageAsText:", messageAsText);
 
-        let messageName = Object.keys(messagePackage)[0]; // First key is a message class name
-        let messageBody = messagePackage[messageName]; // Value of first key is message class body/properties
+            //   let messagePackage = JSON.parse(messageAsText);
+            //  let messagePackage = messageAsText;   
 
-        console.log("Handling", messageName, "...");
-        console.log('Message =', messageBody);
+             console.log(messagePackage);
 
-        let messageHandler = this.ResolveMessageHandler(messageName);
 
-        return  messageHandler.Handle(messageBody, context);
-        // .then((result) =>
-        // {
-        //     console.log("[cqrs.execute.handle] " + JSON.stringify(result));
+            let messageName = Object.keys(messagePackage)[0]; // First key is a message class name
+            let messageBody = messagePackage[messageName]; // Value of first key is message class body/properties
 
-         
-        // }).catch((error) =>
-        // {
-        // console.log("[cqrs.execute.handle] "+JSON.stringify(error));
-        
-        // });
+            console.log("Handling " + messageName + "...");
+            console.log('with message:', messageBody);
+
+            let messageHandler = this.ResolveMessageHandler(messageName);
+
+            return messageHandler.Handle(messageBody, context);
+        }
+        catch (error)
+        {
+            console.log("CQRS EXECUTE ERROR: ", error);
+            throw new HandlerException("Wrong message", 400);
+        }
     }
 }
 

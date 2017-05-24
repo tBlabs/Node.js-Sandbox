@@ -6,4 +6,6 @@ export interface INotesRepo
 {
     Add(note: NoteEntity): Promise<void>;
     GetChildren(parentId: guid, userId: guid): Promise<NoteDto[]>;
+    Update(note: NoteEntity): Promise<void>;
+    Delete(parentId: guid, userId: guid): Promise<void>;
 }

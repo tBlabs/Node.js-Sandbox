@@ -1,7 +1,6 @@
 import { HandlerException } from "../../framework/HandlerException";
-import { IHttpStatusCode } from "../../framework/IHttpStatusCode";
 
-export class WrongPasswordException extends HandlerException implements IHttpStatusCode
+export class WrongPasswordException extends HandlerException
 {
     message = "Wrong password";
     statusCode = 401;

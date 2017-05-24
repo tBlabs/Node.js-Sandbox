@@ -1,8 +1,7 @@
 import { HandlerException } from "../../framework/HandlerException";
-import { IHttpStatusCode } from "../../framework/IHttpStatusCode";
 
-export class UnathorizedException extends HandlerException implements IHttpStatusCode
+export class UnathorizedException extends HandlerException 
 {
-    message = "Unathorized";
-    statusCode = 403;
+    message = "Unauthorized";
+    statusCode = 401;
 }

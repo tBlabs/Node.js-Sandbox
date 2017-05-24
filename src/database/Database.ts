@@ -1,22 +1,29 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import 'reflect-metadata'
 import { MongoClient, Collection, MongoError, Db } from 'mongodb';
+
 
 @injectable()
 export class Database
 {
-    private connectionString: string = 'mongodb://localhost:27017/sandbox';
+    private connectionString: string = '';
     private _mongo: MongoClient = null;
     private _db: Db = null;
 
-    constructor() 
+    constructor( @inject('IDatabaseConfig') config: IDatabaseConfig) 
     {
         this._mongo = new MongoClient();
+        this.connectionString = config.connectionString;
+    }
+
+    private async Connect(): Promise<Db>
+    {
+        return await this._mongo.connect(this.connectionString);
     }
 
     public async Clean(collection: string): Promise<void>
     {
-        let db = await this._mongo.connect(this.connectionString);
+        let db = await this.Connect();
 
         return await db.collection(collection).drop();
     }
@@ -25,7 +32,8 @@ export class Database
     {
         try
         {
-            let db = await this._mongo.connect(this.connectionString);
+            let db = await this.Connect();
+
             return await db.collection(collection);
         }
         catch (error)
