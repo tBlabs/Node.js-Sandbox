@@ -57,42 +57,30 @@ export class NotesRepo implements INotesRepo
 
     private async FindChildren(collection: Collection, parentId: guid, userId: guid): Promise<void>
     {
-        console.log("FindChildren(" + parentId + ")");
-
         this.notesToDelete.push(parentId);
 
         let cursor: Cursor<any> = await collection.find({ parentId: parentId, userId: userId }, { _id: 0, id: 1 });
         let children: any[] = await cursor.toArray(); // Not a NoteEntity[] !
         let childrenIds = children.map(x => x.id);
-        console.log("kids count: ", childrenIds.length);
-        console.log(children);
 
-        // for (let noteId in children)
         for (let i = 0; i < childrenIds.length; i++)
         {
-            console.log('(+) ' + (childrenIds[i]));
-
             await this.FindChildren(collection, childrenIds[i], userId);
         }
     }
 
     public async Delete(parentId: guid, userId: guid): Promise<void> // every user can have many notes with parentId equal empty guid
     {
-        console.log("Delete() " + parentId);
-
         this.notesToDelete = [];
 
         let collection = await this._db.Open(this.collectionName);
 
         await this.FindChildren(collection, parentId, userId);
 
-        console.log("Full tree:");
-        for (let i=0; i<this.notesToDelete.length; i++)
+        for (let i = 0; i < this.notesToDelete.length; i++)
         {
-            console.log("(-) " + this.notesToDelete[i]);
-
-            await collection.deleteOne({ id: this.notesToDelete[i] });
-        }  
+            await collection.deleteOne({ id: this.notesToDelete[i] }); // TODO: switch to deleteMany
+        }
 
         this._db.Close();
     }

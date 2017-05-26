@@ -31,14 +31,6 @@ export class Cqrs
     {
         try
         {
-            //  console.log("messageAsText:", messageAsText);
-
-            //   let messagePackage = JSON.parse(messageAsText);
-            //  let messagePackage = messageAsText;   
-
-             console.log(messagePackage);
-
-
             let messageName = Object.keys(messagePackage)[0]; // First key is a message class name
             let messageBody = messagePackage[messageName]; // Value of first key is message class body/properties
 

@@ -26,7 +26,7 @@ function BuildNote(id: guid, parentId: guid): NoteEntity
     return noteEntity;
 }
 
-fdescribe('NotesRepo', () =>
+describe('NotesRepo', () =>
 {
     let notesRepo: NotesRepo = null;
 
@@ -44,24 +44,24 @@ fdescribe('NotesRepo', () =>
 
     it('should delete', async (done) =>
     {
-        let noteEntity: NoteEntity = BuildNote("00000000-0000-0000-0000-000000000001","00000000-0000-0000-0000-000000000000");   
-        await notesRepo.Add(noteEntity);   
-        noteEntity = BuildNote("00000000-0000-0000-0000-000000000002","00000000-0000-0000-0000-000000000000");   
-        await notesRepo.Add(noteEntity);     
-        noteEntity = BuildNote("00000000-0000-0000-0000-000000000003","00000000-0000-0000-0000-000000000000");   
+        let noteEntity: NoteEntity = BuildNote("00000000-0000-0000-0000-000000000001", "00000000-0000-0000-0000-000000000000");
         await notesRepo.Add(noteEntity);
-        noteEntity = BuildNote("00000000-0000-0000-0000-000000000004","00000000-0000-0000-0000-000000000003");   
-        await notesRepo.Add(noteEntity);             
-        noteEntity = BuildNote("00000000-0000-0000-0000-000000000005","00000000-0000-0000-0000-000000000004");   
+        noteEntity = BuildNote("00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000000");
         await notesRepo.Add(noteEntity);
-        noteEntity = BuildNote("00000000-0000-0000-0000-000000000006","00000000-0000-0000-0000-000000000004");   
+        noteEntity = BuildNote("00000000-0000-0000-0000-000000000003", "00000000-0000-0000-0000-000000000000");
+        await notesRepo.Add(noteEntity);
+        noteEntity = BuildNote("00000000-0000-0000-0000-000000000004", "00000000-0000-0000-0000-000000000003");
+        await notesRepo.Add(noteEntity);
+        noteEntity = BuildNote("00000000-0000-0000-0000-000000000005", "00000000-0000-0000-0000-000000000004");
+        await notesRepo.Add(noteEntity);
+        noteEntity = BuildNote("00000000-0000-0000-0000-000000000006", "00000000-0000-0000-0000-000000000004");
         await notesRepo.Add(noteEntity);
 
         await notesRepo.Delete("00000000-0000-0000-0000-000000000000", "00000000-afaf-0000-0000-000000000000");
 
         let notes: NoteEntity[] = await notesRepo.GetChildren(noteEntity.parentId, noteEntity.userId);
 
-         expect(notes.length).toBe(0);
+        expect(notes.length).toBe(0);
 
         done();
     });
