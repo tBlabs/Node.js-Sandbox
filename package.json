@@ -4,7 +4,8 @@
   "description": "",
   "main": "startup.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "start": "node bin/startup.js"
   },
   "author": "",
   "license": "ISC",

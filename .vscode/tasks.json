@@ -59,6 +59,16 @@
                 "--url", "localhost:3000/api/cqrsbus"
             ],
             "showOutput": "never"
+        },   
+        {
+            "taskName": "curl GET /test",
+            "isShellCommand": true,
+            "command": "curl",
+            "args": [
+                "-X", "GET",
+                "--url", "localhost:3000/test"
+            ],
+            "showOutput": "always"
         }
     ]
 }

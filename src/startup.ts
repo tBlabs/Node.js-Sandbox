@@ -31,6 +31,13 @@ class Startup
             host.use(bodyParser.json());
             host.use(cors());
 
+            host.get('/test', (req, res) =>
+            {
+                console.log("Testing...");
+                
+                res.status(200).end("Respond on /test");
+            });
+
             host.post('/api/cqrsbus', async (req, res) =>
             {        
                 // TODO: Why this is not working?!?!?!
@@ -71,7 +78,8 @@ class Startup
                 }
             });
 
-            host.listen(3000, () => console.log('* SERVER START *'));
+            let port = process.env.PORT || 3000;
+            host.listen(port, () => console.log('SERVER STARTED @'+port));
         }
         else
         {                   
